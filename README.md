@@ -9,11 +9,10 @@ Proyek ini bertujuan untuk melakukan Exploratory Data Analysis (EDA) terhadap da
 Buka terminal atau *command prompt* di dalam folder proyek Anda, lalu jalankan perintah berikut secara berurutan:
 
 ```bash
-mkdir proyek_analisis_data
-cd proyek_analisis_data
-pipenv install
-pipenv shell
-pipenv install -r requirements.txt
+1. pipenv install -r requirements.txt
+2. pipenv install jupyter
+3. pipenv shell
+4. jupyter notebook 
 ```
 
 ### Run Streamlit APP
