@@ -19,7 +19,10 @@ st.markdown(
 # fungsi load dataset
 @st.cache_data
 def load_data():
-    df=pd.read_csv("data/all_data_df.csv")
+    file_id= "1h_0SQpi2EZqGtGNTAbv87HMSSDodFaym"
+    url = f"https://drive.google.com/uc?export=download&id={file_id}"
+    # url= f"https://drive.google.com/file/d/1h_0SQpi2EZqGtGNTAbv87HMSSDodFaym/view?usp=sharing"
+    df=pd.read_csv(url)
     if "year" not in df.columns and "datetime" in df.columns:
         df["datetime"] = pd.to_datetime(df["datetime"])
         df["year"] = df["datetime"].dt.year
