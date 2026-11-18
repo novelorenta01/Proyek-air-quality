@@ -19,11 +19,7 @@ st.markdown(
 # fungsi load dataset
 @st.cache_data
 def load_data():
-    file_id= "1h_0SQpi2EZqGtGNTAbv87HMSSDodFaym"
-    url = f"https://drive.google.com/uc?export=download&id={file_id}"
-    # url= f"https://drive.google.com/file/d/1h_0SQpi2EZqGtGNTAbv87HMSSDodFaym/view?usp=sharing"
-    df=pd.read_csv(url)
-    # df=pd.read_csv("data/all_data_df.csv")
+    df=pd.read_csv("data/all_data_df.csv")
     if "year" not in df.columns and "datetime" in df.columns:
         df["datetime"] = pd.to_datetime(df["datetime"])
         df["year"] = df["datetime"].dt.year
@@ -96,6 +92,7 @@ else:
         st.subheader("2. Fluktuasi Musim & Dominasi CO (Twin Axes)")
         if "season" in filtered_df.columns:
             df_season = filtered_df.groupby("season")[polutan_cols].mean()
+            # urutan_musim = ['Semi (spring)', 'Panas (summer)', 'Gugur (autumn)', 'Dingin (winter)']
             urutan_musim = ["spring", "summer", "autumn", "winter"]
             urutan_musim = [
                 m for m in urutan_musim if m in df_season.index
@@ -103,30 +100,55 @@ else:
             df_season = df_season.reindex(urutan_musim)
 
             fig2, ax_left = plt.subplots(figsize=(8, 4))
+            
+            # Sumbu Y Pertama (Kiri): Untuk CO (Gunakan ax_left, bukan ax1)
             color = "tab:red"
-            ax_left.set_ylabel("Konsentrasi CO", color=color, fontweight="bold")
-            ax_left.plot(
+            ax_left.set_xlabel("Musim", fontsize=11, fontweight="bold")
+            ax_left.set_ylabel(r"Konsentrasi CO ($\mu g/m^3$)", color=color, fontsize=11, fontweight="bold")
+            line1 = ax_left.plot(
                 df_season.index,
                 df_season["CO"],
                 color=color,
                 marker="o",
-                linewidth=2,
-                label="CO",
+                linewidth=2.5,
+                label="CO (Sumbu Kiri)",
             )
             ax_left.tick_params(axis="y", labelcolor=color)
+            ax_left.grid(axis="x", linestyle="--", alpha=0.5)
 
-            ax_right = ax_left.twinx()
+            # Sumbu Y Kedua (Kanan): Untuk polutan lain
+            ax2 = ax_left.twinx()
+            ax2.set_ylabel(r"Konsentrasi Polutan Lain ($\mu g/m^3$)", color="black", fontsize=11, fontweight="bold")
+            
+            lines_other = []
             for col in ["PM2.5", "PM10", "SO2", "NO2", "O3"]:
                 if col in df_season.columns:
-                    ax_right.plot(
+                    l = ax2.plot(
                         df_season.index,
                         df_season[col],
                         marker="o",
                         linewidth=1.5,
                         label=col,
                     )
-            ax_right.set_ylabel("Polutan Lain", fontweight="bold")
+                    lines_other.append(l[0])
+
+            ax2.tick_params(axis="y") 
+            
+            # Judul Grafik
+            plt.title(
+                "Fluktuasi Polusi Udara Lintas Musim di Beijing (2013-2017)\n(Dominasi Lonjakan Gas CO di Musim Dingin)", 
+                fontsize=12, 
+                fontweight="bold", 
+                pad=15
+            )
+
+            # Menggabungkan Legenda
+            lines = line1 + lines_other
+            labels = [l.get_label() for l in lines]
+            ax_left.legend(lines, labels, loc="upper center", bbox_to_anchor=(0.5, -0.25), ncol=3, frameon=True)                                                                         
+            
             plt.tight_layout()
+            
             st.pyplot(fig2)
         else:
             st.warning("Kolom 'season' tidak ditemukan di dataset.")
