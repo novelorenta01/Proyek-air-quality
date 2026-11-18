@@ -1,0 +1,15 @@
+PM2.5: Konsentrasi partikel halus berukuran kurang dari 2.5 mikrometer (satuan $\mu g/m^3$). Partikel ini sangat berbahaya karena bisa masuk ke dalam paru-paru.
+PM10: Konsentrasi partikel berukuran kurang dari 10 mikrometer (satuan $\mu g/m^3$), termasuk debu, serbuk sari, dan asap.
+SO2: Konsentrasi Sulfur Dioksida (satuan $\mu g/m^3$), gas polutan hasil pembakaran bahan bakar fosil.
+NO2: Konsentrasi Nitrogen Dioksida (satuan $\mu g/m^3$), gas polutan yang umumnya berasal dari emisi kendaraan bermotor.
+CO: Konsentrasi Karbon Monoksida (satuan $\mu g/m^3$), gas beracun dari pembakaran yang tidak sempurna.
+O3: Konsentrasi Ozon permukaan (satuan $\mu g/m^3$).
+TEMP: Temperatur atau suhu udara saat itu (dalam derajat Celsius, $^\circ C$).PRES: Tekanan udara (dalam satuan hPa).
+DEWP: Titik embun atau Dew Point (dalam derajat Celsius, $^\circ C$), yang menunjukkan tingkat kelembapan.
+RAIN: Curah hujan (dalam milimeter, $mm$).
+wd: Arah angin (Wind Direction, contoh: WNW singkatan dari West-Northwest atau Barat-Barat Laut).
+WSPM: Kecepatan angin (Wind Speed, dalam meter per detik, $m/s$).
+
+
+
+
